@@ -51,28 +51,19 @@ namespace Optimization
             InitializeModuleAttributes();
         }
 
-        ///// <summary>
-        ///// Stores an attribute in the instance dict for future lookups.
-        ///// </summary>
-        //private void StoreAttribute(string name, ManagedType ob)
-        //{
-        //    if (Runtime.PyDict_SetItemString(_dict, name, ob.pyHandle) != 0)
-        //    {
-        //        throw new PythonException();
-        //    }
-        //    ob.IncrRefCount();
-        //}
-
         /// <summary>
         /// Initialize module level functions and attributes
         /// </summary>
         internal void InitializeModuleAttributes()
         {
             var names = new HashSet<string>();
-            foreach (var attribute in new ObjectMethod[]
+            foreach (var attribute in new Method[]
             {
-                new("Average", pyHandle, CreateAverageWrapper),
-                new("Average2", pyHandle, CreateAverageWrapper2)
+                new("Average", CreateAverageWrapper),
+                new("Average2", CreateAverageWrapper2),
+                new("Empty", CreateEmptyWrapper),
+                new("OneMethod", CreateOneMethodWrapper),
+                new("OneProperty", CreateOnePropertyWrapper)
             })
             {
                 var refCount = attribute.RefCount;
@@ -83,17 +74,38 @@ namespace Optimization
             }
         }
 
-        private IntPtr CreateAverageWrapper(IntPtr objectPtr, IntPtr args)
+        private IntPtr CreateAverageWrapper(IntPtr args)
         {
             var handle = new AverageWrapper().pyHandle;
-            Logger.Instance.WriteLine($"CreateAverageWrapper objectPtr: {objectPtr}, args: {args}");
+            Logger.Instance.WriteLine($"CreateAverageWrapper args: {args}");
             return handle;
         }
 
-        private IntPtr CreateAverageWrapper2(IntPtr objectPtr, IntPtr args)
+        private IntPtr CreateAverageWrapper2(IntPtr args)
         {
             var handle = new AverageWrapper2().pyHandle;
-            Logger.Instance.WriteLine($"CreateAverageWrapper2 objectPtr: {objectPtr}, args: {args}");
+            Logger.Instance.WriteLine($"CreateAverageWrapper2 args: {args}");
+            return handle;
+        }
+
+        private IntPtr CreateEmptyWrapper(IntPtr args)
+        {
+            var handle = new EmptyWrapper().pyHandle;
+            Logger.Instance.WriteLine($"CreateEmptyWrapper args: {args}");
+            return handle;
+        }
+
+        private IntPtr CreateOneMethodWrapper(IntPtr args)
+        {
+            var handle = new OneMethodWrapper().pyHandle;
+            Logger.Instance.WriteLine($"CreateOneMethodWrapper args: {args}");
+            return handle;
+        }
+
+        private IntPtr CreateOnePropertyWrapper(IntPtr args)
+        {
+            var handle = new OnePropertyWrapper().pyHandle;
+            Logger.Instance.WriteLine($"CreateOnePropertyWrapper args: {args}");
             return handle;
         }
 

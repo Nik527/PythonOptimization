@@ -21,9 +21,9 @@ namespace Optimization
 
         protected virtual IEnumerable<Property> CreateProperties() => Array.Empty<Property>();
 
-        protected virtual IEnumerable<TypeMethod> CreateMethods() => Array.Empty<TypeMethod>();
+        protected virtual IEnumerable<ObjectMethodAttribute> CreateMethods() => Array.Empty<ObjectMethodAttribute>();
 
-        protected void InitializeAttributes<TAttribute>(IntPtr dictionary, IEnumerable<NamedWrapper<TAttribute>> attributes) where TAttribute : NamedWrapper<TAttribute>
+        protected static void InitializeAttributes<TAttribute>(IntPtr dictionary, IEnumerable<NamedWrapper<TAttribute>> attributes) where TAttribute : NamedWrapper<TAttribute>
         {
             foreach (var attribute in attributes)
             {

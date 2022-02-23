@@ -24,9 +24,9 @@ namespace Optimization.Wrappers
             };
         }
 
-        protected override IEnumerable<TypeMethod> CreateMethods()
+        protected override IEnumerable<ObjectMethodAttribute> CreateMethods()
         {
-            return new TypeMethod[]
+            return new ObjectMethodAttribute[]
             {
                 new(nameof(Add), Add)
             };

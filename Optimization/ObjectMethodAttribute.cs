@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Optimization
 {
-    internal class TypeMethod : NamedWrapper<TypeMethod>
+    internal class ObjectMethodAttribute : NamedWrapper<ObjectMethodAttribute>
     {
         private readonly Func<IntPtr, IntPtr, IntPtr> _body;
 
-        public TypeMethod(string name, Func<IntPtr, IntPtr, IntPtr> body) : base(name)
+        public ObjectMethodAttribute(string name, Func<IntPtr, IntPtr, IntPtr> body) : base(name)
         {
             _body = body;
         }
