@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Optimization
 {
-    internal class Method : NamedWrapper<Method>
+    internal class ObjectMethod : NamedWrapper<ObjectMethod>
     {
-        private readonly Func<IntPtr, IntPtr> _body;
+        private readonly IntPtr _objectPtr;
+        private readonly Func<IntPtr, IntPtr, IntPtr> _body;
 
-        public Method(string name, Func<IntPtr, IntPtr> body) : base(name)
+        public ObjectMethod(string name, IntPtr objectPtr, Func<IntPtr, IntPtr, IntPtr> body) : base(name)
         {
+            _objectPtr = objectPtr;
             _body = body;
         }
 
@@ -22,7 +24,7 @@ namespace Optimization
             Logger.Instance.WriteLine($"tp_call obj ptr: {methodPtr}, args: {args}, kw: {kw}");
             if (!_mapping.TryGetValue(methodPtr, out var method)) throw new Exception($"Not found method for object {methodPtr}");
 
-            var result = method._body(args);
+            var result = method._body(method._objectPtr, args);
             if(result == IntPtr.Zero) throw new Exception($"Method {method.Name} return zero, obj ptr: {methodPtr}, args: {args}, kw: {kw}");
             return result;
         }

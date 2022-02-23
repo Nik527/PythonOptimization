@@ -10,9 +10,9 @@ namespace Optimization
     internal class Property : NamedWrapper<Property>
     {
         private readonly Func<IntPtr, IntPtr> _getter;
-        private readonly Action<IntPtr, IntPtr> _setter;
+        private readonly Action<IntPtr, IntPtr>? _setter;
 
-        public Property(string name, Func<IntPtr, IntPtr> getter, Action<IntPtr, IntPtr> setter = null) : base(name)
+        public Property(string name, Func<IntPtr, IntPtr> getter, Action<IntPtr, IntPtr>? setter = null) : base(name)
         {
             _getter = getter;
             _setter = setter;

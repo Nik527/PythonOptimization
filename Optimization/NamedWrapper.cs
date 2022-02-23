@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Optimization
 {
-    internal abstract class NamedWrapper<T> : BaseWrapper<T> where T : NamedWrapper<T>
+    internal abstract class NamedWrapper<T> : Wrapper<T> where T : NamedWrapper<T>
     {
         public string Name { get; }
 

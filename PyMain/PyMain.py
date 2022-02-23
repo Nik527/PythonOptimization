@@ -50,6 +50,15 @@ for i in range(test_count):
 end_time_optimization = time.time()
 print(f"optimization indicator time: {end_time_optimization-start_time_optimization}s,  value: {optIndicator.Value}")
 
+#-----------------------------------------------------------------------------------
+optIndicator2 = optimization.Average2()
+
+start_time_optimization2 = time.time()
+for i in range(test_count):
+    optIndicator2.Add(random.uniform(0, 100))
+end_time_optimization2 = time.time()
+print(f"optimization indicator2 time: {end_time_optimization2-start_time_optimization2}s,  value: {optIndicator2.Value}")
+
 
 #print(f"optIndicator __dir__(): {optIndicator.__dir__()}\n")
 

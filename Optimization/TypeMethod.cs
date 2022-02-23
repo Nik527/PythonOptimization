@@ -23,9 +23,9 @@ namespace Optimization
             Logger.Instance.WriteLine($"tp_descr_get obj ptr: {objectPtr}, ds: {methodPtr}, tp: {tp}");
             Logger.Instance.WriteLine($"\tAverageWrapper: {{ {string.Join(", ", Wrappers.AverageWrapper._mapping.Keys)} }}");
             Logger.Instance.WriteLine($"\tTypeMethod: {{ {string.Join(", ", _mapping.Keys)} }}");
-            Logger.Instance.WriteLine($"\tMethod: {{ {string.Join(", ", Method._mapping.Keys)} }}");
+            Logger.Instance.WriteLine($"\tMethod: {{ {string.Join(", ", ObjectMethod._mapping.Keys)} }}");
             if (!_mapping.TryGetValue(methodPtr, out var typeMethod)) throw new Exception($"Not found method for ptr {methodPtr}");
-            var method = new Method(typeMethod.Name, objectPtr, typeMethod._body);
+            var method = new ObjectMethod(typeMethod.Name, objectPtr, typeMethod._body);
             var dictionary = GetObjectDict(objectPtr);
 
             var dictionarySize = (int)Runtime.PyDict_Size(dictionary);

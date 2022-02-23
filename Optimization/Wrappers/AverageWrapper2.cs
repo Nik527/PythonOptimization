@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 namespace Optimization.Wrappers
 {
     using static Runtime;
-    internal class AverageWrapper : ObjectWrapper<AverageWrapper>
+    internal class AverageWrapper2 : ObjectWrapper<AverageWrapper2>
     {
         private readonly Average _average = new();
-        public AverageWrapper()
+        public AverageWrapper2()
         {
+            InitializeAttributes(_dictionary,
+                new Method[]
+                {
+                    new(nameof(Add), Add)
+                });
         }
 
         protected override IEnumerable<Property> CreateProperties()
@@ -24,15 +29,7 @@ namespace Optimization.Wrappers
             };
         }
 
-        protected override IEnumerable<TypeMethod> CreateMethods()
-        {
-            return new TypeMethod[]
-            {
-                new(nameof(Add), Add)
-            };
-        }
-
-        private static IntPtr Add(IntPtr objectPtr, IntPtr args)
+        private IntPtr Add(IntPtr args)
         {
             if (!PyTuple_Check(args)) throw new ArgumentException($"Method {nameof(Add)} got invalid type argument ptr: {args}");
             var argsCount = PyTuple_Size(args);
@@ -40,8 +37,7 @@ namespace Optimization.Wrappers
             var valuePtr = PyTuple_GetItem(args, 0);
             if (!PyFloat_Check(valuePtr)) throw new ArgumentException($"Method {nameof(Add)} got invalid type (float) argument 0 ptr: {valuePtr}");
             var value = PyFloat_AsDouble(valuePtr);
-            var obj = GetObject(objectPtr);
-            obj._average.Add(value);
+            _average.Add(value);
             XIncref(PyNone);
             return PyNone;
         }

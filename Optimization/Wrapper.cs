@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Python.Runtime;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,21 +8,29 @@ using System.Threading.Tasks;
 
 namespace Optimization
 {
-    internal abstract class Wrapper<T> : BaseWrapper<T> where T : Wrapper<T>
+    internal abstract class Wrapper<T> : BaseObject where T : Wrapper<T>
     {
-        private static bool _isInitialized = false;
+        internal static readonly ConcurrentDictionary<IntPtr, T> _mapping = new();
+
         protected Wrapper()
         {
-            if(!_isInitialized)
-            {
-                _isInitialized = true;
-                InitializeAttributes<T, Property>(CreateProperties());
-                InitializeAttributes<T, TypeMethod>(CreateMethods());
-            }
+            if (this is not T t) throw new Exception($"Error generic type {typeof(T).FullName}, must be {GetType().FullName}");
+            if (!_mapping.TryAdd(pyHandle, t)) throw new Exception($"Error create (add to dictionary) object in type {GetType().FullName}");
         }
 
-        protected abstract IEnumerable<Property> CreateProperties();
+        protected static T GetObject(IntPtr objectPtr)
+        {
+            if (_mapping.TryGetValue(objectPtr, out var @object)) return @object;
+            throw new Exception($"Object {typeof(T).Name} with ptr {objectPtr} not found");
+        }
 
-        protected abstract IEnumerable<TypeMethod> CreateMethods();
+        #region Python object attributes
+        public static void tp_dealloc(IntPtr objectPtr)
+        {
+            Logger.Instance.WriteLine($"Try dealloc object ptr: {objectPtr}");
+            if (!_mapping.TryRemove(objectPtr, out var self)) throw new Exception($"Object {typeof(T).Name} with ptr {objectPtr} not found");
+            self.Dealloc();
+        }
+        #endregion
     }
 }

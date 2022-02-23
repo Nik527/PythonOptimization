@@ -35,40 +35,6 @@ namespace Optimization
             FinalizeObject(this);
         }
 
-        protected void InitializeAttributes<T, TAttribute>(IEnumerable<NamedWrapper<TAttribute>> attributes) where TAttribute : NamedWrapper<TAttribute>
-        {
-            var names = new HashSet<string>();
-            var dictionary = GetTypeDictionary<T>();
-            foreach (var attribute in attributes)
-            {
-                var refCount = attribute.RefCount;
-                if (names.Contains(attribute.Name)) throw new Exception($"Dublicate attribute name {attribute.Name}");
-                if(Runtime.PyDict_SetItemString(dictionary, attribute.Name, attribute.pyHandle) != 0) throw new PythonException();
-                attribute.DecrRefCount();
-                names.Add(attribute.Name);
-                Logger.Instance.WriteLine($"Add attribute {attribute.Name} to type {typeof(T).Name}, ptr: {attribute.pyHandle}, ref count: {attribute.RefCount} (before {refCount})");
-            }
-        }
-
-        //internal static void InitializeProperties<T>(IEnumerable<Property> properties)
-        //{
-        //    var names = new HashSet<string>();
-        //    var dictionary = GetTypeDictionary<T>();
-        //    foreach (var method in methods)
-        //    {
-        //        if (names.Contains(method.Name)) throw new Exception($"Dublicate property name {method.Name}");
-        //    }
-
-        //}
-
-        private static IntPtr GetTypeDictionary<T>()
-        {
-            var type = typeof(T);
-            var @class = ClassManager.GetClass(type);
-            var typeHandle = TypeManager.GetTypeHandle(@class, type);
-            return Marshal.ReadIntPtr(typeHandle, TypeOffset.tp_dict);
-        }
-
         /// <summary>
         /// Common finalization code to support custom tp_deallocs.
         /// </summary>
