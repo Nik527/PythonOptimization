@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	<OutputPath>bin\</OutputPath>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<!--
+	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\pythonnet\src\runtime\Python.Runtime.csproj" />
+    <ProjectReference Include="..\CSharpMain\CSharpMain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+	<PackageReference Include="fasterflect" Version="3.0.0">
+		
+	</PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Indicator\" />
+  </ItemGroup>
+
+</Project>

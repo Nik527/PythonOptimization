@@ -1,0 +1,73 @@
+﻿Create Method pyHandle: 1868063917824, dictionary: 1868041513728, ref count: 1
+module Optimization ptr: 1868063916432, ref count: 1
+module Optimization ptr: 1868063916432, ref count: 1
+   at System.Environment.get_StackTrace()
+   at Indicators.Average.Add(Double value) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Indicator\Average.cs:line 19
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Span`1& arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Python.Runtime.MethodBinder.Invoke(IntPtr inst, IntPtr args, IntPtr kw, MethodBase info, MethodInfo[] methodinfo)
+   at Python.Runtime.MethodObject.Invoke(IntPtr target, IntPtr args, IntPtr kw, MethodBase info)
+   at Python.Runtime.MethodBinding.tp_call(IntPtr ob, IntPtr args, IntPtr kw)
+tp_call obj ptr: 1868063917824, args: 1867981471808, kw: 0
+Create AverageWrapper pyHandle: 1868063917728, dictionary: 1868067696000, ref count: 1
+Create Property pyHandle: 1868063916960, dictionary: 1868063914816, ref count: 1
+Add attribute Value to type AverageWrapper, ptr: 1868063916960, ref count: 1 (before 1)
+Create TypeMethod pyHandle: 1868063917152, dictionary: 1868064068736, ref count: 1
+Add attribute Add to type AverageWrapper, ptr: 1868063917152, ref count: 1 (before 1)
+CreateAverageWrapper objectPtr: 1868063916432, args: 1867981471808
+tp_descr_get obj ptr: 1868063917728, ds: 1868063917152, tp: 1868030429984
+	AverageWrapper: { 1868063917728 }
+	TypeMethod: { 1868063917152 }
+	Method: { 1868063917824 }
+Create Method pyHandle: 1868063917200, dictionary: 1868059935680, ref count: 1
+	Try set objectPtr: 1868063917728, dictionary: 1868067696000, item name: Add, ptr: 1868063917200
+tp_descr_get obj ptr: 1868063917728, ds: 1868063917152, tp: 1868030429984
+	AverageWrapper: { 1868063917728 }
+	TypeMethod: { 1868063917152 }
+	Method: { 1868063917200, 1868063917824 }
+Create Method pyHandle: 1868063917248, dictionary: 1868064068672, ref count: 1
+	Try set objectPtr: 1868063917728, dictionary: 1868067696000, item name: Add, ptr: 1868063917248
+Try dealloc object ptr: 1868063917200
+Dealloc object ptr: 1868063917200, ref count: 0, type: Method
+tp_descr_get obj ptr: 1868063917728, ds: 1868063917152, tp: 1868030429984
+	AverageWrapper: { 1868063917728 }
+	TypeMethod: { 1868063917152 }
+	Method: { 1868063917248, 1868063917824 }
+Create Method pyHandle: 1868063917296, dictionary: 1868059935680, ref count: 1
+	Try set objectPtr: 1868063917728, dictionary: 1868067696000, item name: Add, ptr: 1868063917296
+Try dealloc object ptr: 1868063917248
+Dealloc object ptr: 1868063917248, ref count: 0, type: Method
+tp_call obj ptr: 1868063917296, args: 1868063917008, kw: 0
+   at System.Environment.get_StackTrace()
+   at Indicators.Average.Add(Double value) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Indicator\Average.cs:line 19
+   at Optimization.Wrappers.AverageWrapper.Add(IntPtr objectPtr, IntPtr args) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Wrappers\AverageWrapper.cs:line 44
+   at Optimization.Method.tp_call(IntPtr methodPtr, IntPtr args, IntPtr kw) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Method.cs:line 27
+tp_descr_get obj ptr: 1868063917728, ds: 1868063917152, tp: 1868030429984
+	AverageWrapper: { 1868063917728 }
+	TypeMethod: { 1868063917152 }
+	Method: { 1868063917296, 1868063917824 }
+Create Method pyHandle: 1868063917248, dictionary: 1868064068672, ref count: 1
+	Try set objectPtr: 1868063917728, dictionary: 1868067696000, item name: Add, ptr: 1868063917248
+Try dealloc object ptr: 1868063917296
+Dealloc object ptr: 1868063917296, ref count: 0, type: Method
+tp_descr_get obj ptr: 1868063917728, ds: 1868063917152, tp: 1868030429984
+	AverageWrapper: { 1868063917728 }
+	TypeMethod: { 1868063917152 }
+	Method: { 1868063917248, 1868063917824 }
+Create Method pyHandle: 1868063917296, dictionary: 1868059935680, ref count: 1
+	Try set objectPtr: 1868063917728, dictionary: 1868067696000, item name: Add, ptr: 1868063917296
+Try dealloc object ptr: 1868063917248
+Dealloc object ptr: 1868063917248, ref count: 0, type: Method
+tp_descr_get obj ptr: 1868063917728, ds: 1868063917152, tp: 1868030429984
+	AverageWrapper: { 1868063917728 }
+	TypeMethod: { 1868063917152 }
+	Method: { 1868063917296, 1868063917824 }
+Create Method pyHandle: 1868063917248, dictionary: 1868064068672, ref count: 1
+	Try set objectPtr: 1868063917728, dictionary: 1868067696000, item name: Add, ptr: 1868063917248
+Try dealloc object ptr: 1868063917296
+Dealloc object ptr: 1868063917296, ref count: 0, type: Method
+tp_call obj ptr: 1868063917248, args: 1868063917008, kw: 0
+   at System.Environment.get_StackTrace()
+   at Indicators.Average.Add(Double value) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Indicator\Average.cs:line 19
+   at Optimization.Wrappers.AverageWrapper.Add(IntPtr objectPtr, IntPtr args) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Wrappers\AverageWrapper.cs:line 44
+   at Optimization.Method.tp_call(IntPtr methodPtr, IntPtr args, IntPtr kw) in C:\Users\Nik\Sources\Research\PythonOptimization\Optimization\Method.cs:line 27
