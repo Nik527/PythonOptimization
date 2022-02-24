@@ -14,8 +14,8 @@ namespace Optimization
             {
                 _isInitialized = true;
                 var dictionary = GetTypeDictionary();
-                InitializeAttributes(dictionary, CreateProperties());
-                InitializeAttributes(dictionary, CreateMethods());
+                InitializeAttributes(dictionary, CreateProperties(), true);
+                InitializeAttributes(dictionary, CreateMethods(), true);
             }
         }
 
@@ -23,7 +23,7 @@ namespace Optimization
 
         protected virtual IEnumerable<ObjectMethodAttribute> CreateMethods() => Array.Empty<ObjectMethodAttribute>();
 
-        protected static void InitializeAttributes<TAttribute>(IntPtr dictionary, IEnumerable<NamedWrapper<TAttribute>> attributes) where TAttribute : NamedWrapper<TAttribute>
+        protected static void InitializeAttributes<TAttribute>(IntPtr dictionary, IEnumerable<NamedWrapper<TAttribute>> attributes, bool addNameToGlobalSet = false) where TAttribute : NamedWrapper<TAttribute>
         {
             foreach (var attribute in attributes)
             {
@@ -31,7 +31,7 @@ namespace Optimization
                 if (_names.Contains(attribute.Name)) throw new Exception($"Dublicate attribute name {attribute.Name}");
                 if (PyDict_SetItemString(dictionary, attribute.Name, attribute.pyHandle) != 0) throw new PythonException();
                 attribute.DecrRefCount();
-                _names.Add(attribute.Name);
+                if(addNameToGlobalSet) _names.Add(attribute.Name);
                 Logger.Instance.WriteLine($"Add attribute {attribute.Name} to type {typeof(T).Name}, ptr: {attribute.pyHandle}, ref count: {attribute.RefCount} (before {refCount})");
             }
         }

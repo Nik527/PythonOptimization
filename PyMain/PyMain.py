@@ -59,30 +59,40 @@ for i in range(test_count):
 end_time_optimization2 = time.time()
 print(f"optimization indicator2 time: {end_time_optimization2-start_time_optimization2}s,  value: {optIndicator2.Value}")
 
-
-#print(f"optIndicator __dir__(): {optIndicator.__dir__()}\n")
-
-#print()
-#print(f"optIndicator id: {id(optIndicator)}, dir: {dir(optIndicator)}\n")
-#print(f"optIndicator.Add id: {id(optIndicator.Add)}, dir: {dir(optIndicator.Add)}\n")
-#print(f"optIndicator.Value id: {id(optIndicator.Value)}, dir: {dir(optIndicator.Value)}\n")
-#Logger.Instance.Flush()
-#optIndicator.Add(random.uniform(0, 100))
-#print(f"optIndicator.Add id: {id(optIndicator.Add)}, dir: {dir(optIndicator.Add)}\n")
-#optIndicator.Add(random.uniform(0, 100))
+#-----------------------------------------------------------------------------------
+start_time_create = time.time()
+for i in range(test_count):
+    indicator = optimization.Empty()
+end_time_create = time.time()
+print(f"create Empty object time: {end_time_create-start_time_create}s")
 
 #-----------------------------------------------------------------------------------
-#import sys
-#print(sys.path)
-##m = ModuleLoader()
-##print(m)
-##m.test()
-##print("----------------------------------")
-##print(sys.modules.keys())
-#print("----------------------------------")
-#import optimization
+start_time_create = time.time()
+for i in range(test_count):
+    indicator = optimization.OneProperty()
+end_time_create = time.time()
+print(f"create OneProperty object time: {end_time_create-start_time_create}s")
 
-#print(f"test: {optimization.test()}")
+#-----------------------------------------------------------------------------------
+start_time_create = time.time()
+for i in range(test_count):
+    indicator = optimization.OneMethod()
+end_time_create = time.time()
+print(f"create OneMethod object time: {end_time_create-start_time_create}s")
+
+#-----------------------------------------------------------------------------------
+start_time_create = time.time()
+for i in range(test_count):
+    indicator = optimization.Average()
+end_time_create = time.time()
+print(f"create Average object time: {end_time_create-start_time_create}s")
+
+#-----------------------------------------------------------------------------------
+start_time_create = time.time()
+for i in range(test_count):
+    indicator = optimization.Average2()
+end_time_create = time.time()
+print(f"create Average2 object time: {end_time_create-start_time_create}s")
 
 
 
