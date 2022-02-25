@@ -44,6 +44,10 @@ namespace Optimization
             return Marshal.ReadIntPtr(typeHandle, TypeOffset.tp_dict);
         }
 
-
+        protected override void Dealloc()
+        {
+            ObjectMethodAttribute.DeallocMethods(pyHandle);
+            base.Dealloc();
+        }
     }
 }

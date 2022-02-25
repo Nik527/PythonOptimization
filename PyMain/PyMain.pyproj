@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c5661e7a-4c41-40d7-a221-7586e7fd86af</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PyMain.py</StartupFile>
+    <StartupFile>TestDealloc.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="optimization.py" />
+    <Compile Include="TestDealloc.py" />
     <Compile Include="PyMain.py" />
   </ItemGroup>
   <ItemGroup>

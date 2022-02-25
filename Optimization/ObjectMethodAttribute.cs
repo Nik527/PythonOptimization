@@ -1,5 +1,6 @@
 ﻿using Python.Runtime;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,21 @@ namespace Optimization
 {
     internal class ObjectMethodAttribute : NamedWrapper<ObjectMethodAttribute>
     {
+        internal static readonly ConcurrentDictionary<IntPtr, ConcurrentDictionary<IntPtr, ObjectMethod>> _cache = new();
         private readonly Func<IntPtr, IntPtr, IntPtr> _body;
 
         public ObjectMethodAttribute(string name, Func<IntPtr, IntPtr, IntPtr> body) : base(name)
         {
             _body = body;
+        }
+
+        internal static void DeallocMethods(IntPtr objectPtr)
+        {
+            if (!_cache.TryRemove(objectPtr, out var objectMethods)) return;
+            foreach (var method in objectMethods.Values)
+            {
+                method.DecrRefCount();
+            }
         }
 
         #region Python object attributes
@@ -24,39 +35,28 @@ namespace Optimization
             Logger.Instance.WriteLine($"\tAverageWrapper: {{ {string.Join(", ", Wrappers.AverageWrapper._mapping.Keys)} }}");
             Logger.Instance.WriteLine($"\tTypeMethod: {{ {string.Join(", ", _mapping.Keys)} }}");
             Logger.Instance.WriteLine($"\tMethod: {{ {string.Join(", ", ObjectMethod._mapping.Keys)} }}");
-            if (!_mapping.TryGetValue(methodPtr, out var typeMethod)) throw new Exception($"Not found method for ptr {methodPtr}");
-            var method = new ObjectMethod(typeMethod.Name, objectPtr, typeMethod._body);
-            var dictionary = GetObjectDict(objectPtr);
-
-            var dictionarySize = (int)Runtime.PyDict_Size(dictionary);
-            Logger.Instance.WriteLine($"Dictionary {dictionary}, size: {dictionarySize}");
-            IntPtr keylist = Runtime.PyDict_Keys(dictionary);
-            IntPtr valueList = Runtime.PyDict_Values(dictionary);
-            for (int i = 0; i < dictionarySize; ++i)
+            if(!_cache.TryGetValue(objectPtr, out var objectMethods))
             {
-                var key = Runtime.GetManagedString(Runtime.PyList_GetItem(new BorrowedReference(keylist), i));
-                var ptr = Runtime.PyList_GetItem(new BorrowedReference(valueList), i).DangerousGetAddress();
-                Logger.Instance.WriteLine($"\tkey {key} => {ptr}");
+                objectMethods = new ConcurrentDictionary<IntPtr, ObjectMethod>();
+                if (!_cache.TryAdd(objectPtr, objectMethods))
+                {
+                    if (!_cache.TryGetValue(objectPtr, out objectMethods)) throw new Exception($"Error get object ptr: {objectPtr} from cache");
+                }
             }
-            Runtime.XDecref(keylist);
-            Runtime.XDecref(valueList);
+            if (!objectMethods.TryGetValue(methodPtr, out var method))
+            {
+                if (!_mapping.TryGetValue(methodPtr, out var objectMethodAttribute)) throw new Exception($"Not found method for ptr {methodPtr}");
+                method = new ObjectMethod(objectMethodAttribute.Name, objectPtr, objectMethodAttribute._body);
+                if(!objectMethods.TryAdd(methodPtr, method))
+                {
+                    method.DecrRefCount();
+                    if (!objectMethods.TryGetValue(methodPtr, out method)) throw new Exception($"Error get method ptr: {methodPtr} for object ptr: {objectPtr} from cache");
+                }
+            }
 
-
-            Logger.Instance.WriteLine($"\tTry set objectPtr: {objectPtr}, dictionary: {dictionary}, item name: {method.Name}, ptr: {method.pyHandle}");
-            Logger.Instance.Flush();
-            if (Runtime.PyDict_SetItemString(dictionary, method.Name, method.pyHandle) != 0) throw new PythonException();
+            method.IncrRefCount();
             return method.pyHandle;
         }
-
-        //public static IntPtr tp_call(IntPtr objectPtr, IntPtr args, IntPtr kw)
-        //{
-        //    Console.WriteLine($"tp_call obj ptr: {objectPtr}, args: {args}, kw: {kw}");
-        //    if (!_mapping.TryGetValue(objectPtr, out var method)) throw new Exception($"Not found method for object {objectPtr}");
-
-        //    var result = method._body(objectPtr, args);
-        //    if(result == IntPtr.Zero) throw new Exception($"Method {method.Name} return zero, obj ptr: {objectPtr}, args: {args}, kw: {kw}");
-        //    return result;
-        //}
         #endregion
     }
 }
