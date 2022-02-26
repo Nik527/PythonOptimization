@@ -1,12 +1,6 @@
-﻿using Python.Runtime;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
-namespace Optimization
+namespace Python.Runtime.Optimization
 {
     internal abstract class Wrapper<T> : BaseObject where T : Wrapper<T>
     {
@@ -27,7 +21,6 @@ namespace Optimization
         #region Python object attributes
         public static void tp_dealloc(IntPtr objectPtr)
         {
-            Logger.Instance.WriteLine($"Try dealloc object ptr: {objectPtr}");
             if (!_mapping.TryRemove(objectPtr, out var self)) throw new Exception($"Object {typeof(T).Name} with ptr {objectPtr} not found");
             self.Dealloc();
         }

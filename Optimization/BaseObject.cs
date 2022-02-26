@@ -1,12 +1,6 @@
-﻿using Python.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
-namespace Optimization
+namespace Python.Runtime.Optimization
 {
     internal abstract class BaseObject : ManagedType
     {
@@ -19,7 +13,6 @@ namespace Optimization
             SetupGc();
             _dictionary = Runtime.PyDict_New();
             SetObjectDict(pyHandle, _dictionary);
-            Logger.Instance.WriteLine($"Create {GetType().Name} pyHandle: {pyHandle}, dictionary: {_dictionary}, ref count: {RefCount}");
         }
 
         private void SetupGc()
@@ -31,7 +24,6 @@ namespace Optimization
 
         protected virtual void Dealloc()
         {
-            Logger.Instance.WriteLine($"Dealloc object ptr: {pyHandle}, ref count: {RefCount}, type: {GetType().Name}");
             FinalizeObject(this);
         }
 
@@ -69,16 +61,5 @@ namespace Optimization
             Exceptions.SetError(Exceptions.AttributeError, "attribute is read-only");
             return -1;
         }
-
-        ///// <summary>
-        ///// Default dealloc implementation.
-        ///// </summary>
-        //public static void tp_dealloc(IntPtr ob)
-        //{
-        //    // Clean up a Python instance of this extension type. This
-        //    // frees the allocated Python object and decrefs the type.
-        //    var self = (ExtensionType)GetManagedObject(ob);
-        //    self.Dealloc();
-        //}
     }
 }

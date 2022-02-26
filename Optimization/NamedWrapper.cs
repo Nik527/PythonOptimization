@@ -1,11 +1,4 @@
-﻿using Python.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Optimization
+﻿namespace Python.Runtime.Optimization
 {
     internal abstract class NamedWrapper<T> : Wrapper<T> where T : NamedWrapper<T>
     {

@@ -1,0 +1,9 @@
+﻿random time: 0.24901700019836426s, value: 57.04042770376283
+net indicator time: 1.513082504272461s, value: 50.00194725692274
+optimization indicator time: 0.4075794219970703s,  value: 49.99617467359047
+optimization indicator2 time: 0.33399128913879395s,  value: 50.00276975242484
+create Empty object time: 0.5219995975494385s
+create OneProperty object time: 0.4650087356567383s
+create OneMethod object time: 1.3460314273834229s
+create Average object time: 0.4759683609008789s
+create Average2 object time: 1.332019329071045s

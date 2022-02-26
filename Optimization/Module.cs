@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using Python.Runtime;
-using Optimization.Wrappers;
+using Python.Runtime.Optimization.Wrappers;
 
-namespace Optimization
+namespace Python.Runtime.Optimization
 {
     /// <summary>
     /// Implements a Python type that provides access to CLR namespaces. The
@@ -74,41 +67,19 @@ namespace Optimization
             }
         }
 
-        private IntPtr CreateAverageWrapper(IntPtr args)
-        {
-            var handle = new AverageWrapper().pyHandle;
-            Logger.Instance.WriteLine($"CreateAverageWrapper args: {args}");
-            return handle;
-        }
+        #region Methods
+        private IntPtr CreateAverageWrapper(IntPtr args) => new AverageWrapper().pyHandle;
 
-        private IntPtr CreateAverageWrapper2(IntPtr args)
-        {
-            var handle = new AverageWrapper2().pyHandle;
-            Logger.Instance.WriteLine($"CreateAverageWrapper2 args: {args}");
-            return handle;
-        }
+        private IntPtr CreateAverageWrapper2(IntPtr args) => new AverageWrapper2().pyHandle;
 
-        private IntPtr CreateEmptyWrapper(IntPtr args)
-        {
-            var handle = new EmptyWrapper().pyHandle;
-            Logger.Instance.WriteLine($"CreateEmptyWrapper args: {args}");
-            return handle;
-        }
+        private IntPtr CreateEmptyWrapper(IntPtr args) => new EmptyWrapper().pyHandle;
 
-        private IntPtr CreateOneMethodWrapper(IntPtr args)
-        {
-            var handle = new OneMethodWrapper().pyHandle;
-            Logger.Instance.WriteLine($"CreateOneMethodWrapper args: {args}");
-            return handle;
-        }
+        private IntPtr CreateOneMethodWrapper(IntPtr args) => new OneMethodWrapper().pyHandle;
 
-        private IntPtr CreateOnePropertyWrapper(IntPtr args)
-        {
-            var handle = new OnePropertyWrapper().pyHandle;
-            Logger.Instance.WriteLine($"CreateOnePropertyWrapper args: {args}");
-            return handle;
-        }
+        private IntPtr CreateOnePropertyWrapper(IntPtr args) => new OnePropertyWrapper().pyHandle;
+        #endregion
 
+        #region Python object attributes
         /// <summary>
         /// ModuleObject __repr__ implementation.
         /// </summary>
@@ -132,5 +103,6 @@ namespace Optimization
             ClearObjectDict(ob);
             return 0;
         }
+        #endregion
     }
 }

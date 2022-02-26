@@ -1,11 +1,4 @@
-﻿using Python.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Optimization
+﻿namespace Python.Runtime.Optimization
 {
     internal class ObjectMethod : NamedWrapper<ObjectMethod>
     {
@@ -21,8 +14,6 @@ namespace Optimization
         #region Python object attributes
         public static IntPtr tp_call(IntPtr methodPtr, IntPtr args, IntPtr kw)
         {
-            Logger.Instance.WriteLine($"tp_call obj ptr: {methodPtr}, args: {args}, kw: {kw}");
-            Logger.Instance.Flush();
             if (!_mapping.TryGetValue(methodPtr, out var method)) throw new Exception($"Not found method for object {methodPtr}");
 
             var result = method._body(method._objectPtr, args);

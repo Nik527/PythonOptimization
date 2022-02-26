@@ -1,19 +1,13 @@
-﻿using Python.Runtime;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
-namespace Optimization
+namespace Python.Runtime.Optimization
 {
-    internal class ObjectMethodAttribute : NamedWrapper<ObjectMethodAttribute>
+    internal class ClassMethod : NamedWrapper<ClassMethod>
     {
-        internal static readonly ConcurrentDictionary<IntPtr, ConcurrentDictionary<IntPtr, ObjectMethod>> _cache = new();
+        private static readonly ConcurrentDictionary<IntPtr, ConcurrentDictionary<IntPtr, ObjectMethod>> _cache = new();
         private readonly Func<IntPtr, IntPtr, IntPtr> _body;
 
-        public ObjectMethodAttribute(string name, Func<IntPtr, IntPtr, IntPtr> body) : base(name)
+        public ClassMethod(string name, Func<IntPtr, IntPtr, IntPtr> body) : base(name)
         {
             _body = body;
         }
@@ -31,10 +25,6 @@ namespace Optimization
         public static IntPtr tp_descr_get(IntPtr methodPtr, IntPtr objectPtr, IntPtr tp)
         {
 
-            Logger.Instance.WriteLine($"tp_descr_get obj ptr: {objectPtr}, ds: {methodPtr}, tp: {tp}");
-            Logger.Instance.WriteLine($"\tAverageWrapper: {{ {string.Join(", ", Wrappers.AverageWrapper._mapping.Keys)} }}");
-            Logger.Instance.WriteLine($"\tTypeMethod: {{ {string.Join(", ", _mapping.Keys)} }}");
-            Logger.Instance.WriteLine($"\tMethod: {{ {string.Join(", ", ObjectMethod._mapping.Keys)} }}");
             if(!_cache.TryGetValue(objectPtr, out var objectMethods))
             {
                 objectMethods = new ConcurrentDictionary<IntPtr, ObjectMethod>();

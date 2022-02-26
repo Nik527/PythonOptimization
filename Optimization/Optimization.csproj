@@ -9,6 +9,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	<OutputPath>bin\</OutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<RootNamespace>Python.Runtime.Optimization</RootNamespace>
 	<!--
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies-->
@@ -22,9 +23,6 @@
 	<PackageReference Include="fasterflect" Version="3.0.0">
 		
 	</PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Indicator\" />
   </ItemGroup>
 
 </Project>

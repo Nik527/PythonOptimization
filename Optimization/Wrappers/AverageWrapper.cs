@@ -1,12 +1,6 @@
 ﻿using Indicators;
-using Python.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Optimization.Wrappers
+namespace Python.Runtime.Optimization.Wrappers
 {
     using static Runtime;
     internal class AverageWrapper : ObjectWrapper<AverageWrapper>
@@ -24,9 +18,9 @@ namespace Optimization.Wrappers
             };
         }
 
-        protected override IEnumerable<ObjectMethodAttribute> CreateMethods()
+        protected override IEnumerable<ClassMethod> CreateMethods()
         {
-            return new ObjectMethodAttribute[]
+            return new ClassMethod[]
             {
                 new(nameof(Add), Add)
             };

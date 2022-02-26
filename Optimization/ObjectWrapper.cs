@@ -1,7 +1,6 @@
-﻿using Python.Runtime;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
-namespace Optimization
+namespace Python.Runtime.Optimization
 {
     using static Runtime;
     internal abstract class ObjectWrapper<T> : Wrapper<T> where T : ObjectWrapper<T>
@@ -21,7 +20,7 @@ namespace Optimization
 
         protected virtual IEnumerable<Property> CreateProperties() => Array.Empty<Property>();
 
-        protected virtual IEnumerable<ObjectMethodAttribute> CreateMethods() => Array.Empty<ObjectMethodAttribute>();
+        protected virtual IEnumerable<ClassMethod> CreateMethods() => Array.Empty<ClassMethod>();
 
         protected static void InitializeAttributes<TAttribute>(IntPtr dictionary, IEnumerable<NamedWrapper<TAttribute>> attributes, bool addNameToGlobalSet = false) where TAttribute : NamedWrapper<TAttribute>
         {
@@ -32,7 +31,6 @@ namespace Optimization
                 if (PyDict_SetItemString(dictionary, attribute.Name, attribute.pyHandle) != 0) throw new PythonException();
                 attribute.DecrRefCount();
                 if(addNameToGlobalSet) _names.Add(attribute.Name);
-                Logger.Instance.WriteLine($"Add attribute {attribute.Name} to type {typeof(T).Name}, ptr: {attribute.pyHandle}, ref count: {attribute.RefCount} (before {refCount})");
             }
         }
 
@@ -46,7 +44,7 @@ namespace Optimization
 
         protected override void Dealloc()
         {
-            ObjectMethodAttribute.DeallocMethods(pyHandle);
+            ClassMethod.DeallocMethods(pyHandle);
             base.Dealloc();
         }
     }
