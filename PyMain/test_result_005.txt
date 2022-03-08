@@ -1,0 +1,11 @@
+﻿py indicator time: 1.9363179206848145s
+net indicator time: 11.574749231338501s
+optimization indicator time: 1.731642723083496s
+optimization indicator 2 time: 1.2438266277313232s
+get propety time: 1.0762348175048828s
+set propety time: 1.018869400024414s
+create Empty object time: 4.5447328090667725s
+create OneProperty object time: 4.602685928344727s
+create OneMethod object time: 12.20262598991394s
+create Average object time: 4.620288848876953s
+create Average2 object time: 12.35943055152893s

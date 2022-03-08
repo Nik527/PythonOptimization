@@ -47,5 +47,18 @@ namespace Python.Runtime.Optimization
             ClassMethod.DeallocMethods(pyHandle);
             base.Dealloc();
         }
+
+        #region Python object attributes
+        /// <summary>
+        /// Type __setattr__ implementation.
+        /// </summary>
+        public static new int tp_setattro(IntPtr objectPtr, IntPtr keyPtr, IntPtr valuePtr)
+        {
+            var typePtr = PyObject_Type(objectPtr);
+            var descriptionPtr = _PyType_Lookup(typePtr, keyPtr);
+            if (descriptionPtr == IntPtr.Zero) throw new Exception($"Not found attribute key ptr: {keyPtr} in object ptr: {objectPtr}");
+            return Property.tp_descr_set(descriptionPtr, objectPtr, valuePtr);
+        }
+        #endregion
     }
 }

@@ -23,7 +23,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="init_net_6.py" />
+    <Compile Include="test_create_one_method.py" />
+    <Compile Include="test_create_average.py" />
+    <Compile Include="test_create_average2.py" />
+    <Compile Include="test_create_one_property.py" />
+    <Compile Include="test_definition.py" />
+    <Compile Include="test_create_empty.py" />
+    <Compile Include="test_optimization_set_property.py" />
+    <Compile Include="test_optimization_get_property.py" />
+    <Compile Include="test_optimization_average2.py" />
+    <Compile Include="test_optimization_average.py" />
+    <Compile Include="test_net_average.py" />
+    <Compile Include="test_py_average.py" />
     <Compile Include="optimization.py" />
+    <Compile Include="average.py" />
+    <Compile Include="TestSetProperty.py" />
     <Compile Include="TestDealloc.py" />
     <Compile Include="PyMain.py" />
   </ItemGroup>

@@ -38,6 +38,7 @@ namespace Python.Runtime.Optimization
             self.FreeGCHandle();
         }
 
+        #region Python object attributes
         /// <summary>
         /// Type __setattr__ implementation.
         /// </summary>
@@ -61,5 +62,6 @@ namespace Python.Runtime.Optimization
             Exceptions.SetError(Exceptions.AttributeError, "attribute is read-only");
             return -1;
         }
+        #endregion
     }
 }
